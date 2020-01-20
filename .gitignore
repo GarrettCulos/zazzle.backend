@@ -1,0 +1,50 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+
+pids
+logs
+log
+results
+tmp
+
+# Coverage reports
+coverage
+
+# API keys and secrets
+src/config/.env*
+src/config/environment.*
+!src/config/environment.ts
+!src/config/.env.example
+
+# Dependency directory
+node_modules
+webpack-lambda/
+
+# Editors
+.idea
+*.iml
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore output from coverage report
+
+
+# Ignore deployment script
+.aws
+deploy.sh
+aws-config.json
+
+# Ingore generated files
+/dist
+/graphql-sam-deploy
+/serverless-sam-deploy
+/serverless

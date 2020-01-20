@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist/src",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules/*"],
+      "@global": ["global"],
+      "@util ": ["src/util"],
+      "@services": ["src/services"],
+      "@config": ["src/config"]
+    }
+  },
+  "include": ["src/**/*", "global"]
+}
