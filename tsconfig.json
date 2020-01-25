@@ -16,5 +16,5 @@
       "@config": ["src/config"]
     }
   },
-  "include": ["src/**/*", "global"]
+  "include": ["src/**/*", "scripts/**/*", "global"]
 }

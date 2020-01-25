@@ -11,7 +11,7 @@
   "scripts": {
     "start": "npm run serve-graphql",
     "build.graphql": "webpack --config webpack/webpack.graphql.js",
-    "build.graphql.docker": "webpack --config webpack/webpack.graphql.docker.js",
+    "build.graphql.docker": "webpack --config webpack/webpack.graphql.docker.js && node ./scripts/dynamodb-startup-script.js ",
     "build.graphql.watch": "webpack --config webpack/webpack.graphql.watch.js",
     "clean.build": "rimraf dist coverage graphql-sam-deploy serverless-sam-deploy serverless",
     "serve-graphql.docker": "npm run build.graphql.docker && npm run run-graphql-node",
@@ -34,12 +34,13 @@
     "prettier:quick"
   ],
   "dependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/lz-string": "^1.3.33",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-server": "^2.4.8",
     "apollo-server-lambda": "^2.4.8",
     "async": "^3.0.1",
-    "aws-sdk": "^2.606.0",
+    "aws-sdk": "^2.608.0",
     "bcrypt-nodejs": "^0.0.3",
     "express": "^4.16.3",
     "google-auth-library": "^5.9.1",
@@ -83,6 +84,7 @@
     "tslib": "^1.9.0",
     "tslint": "^5.9.1",
     "typescript": "^3.7.5",
+    "uuid": "^3.4.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
     "webpack-merge": "^4.2.1",
