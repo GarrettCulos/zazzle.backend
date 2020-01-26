@@ -20,6 +20,7 @@ jobs:
           key: build-cache-{{ .Branch }}
           paths:
             - dist
+            - graphql-sam-deploy
   deploy:
     working_directory: ~/zazzle
     executor: aws-serverless/default
