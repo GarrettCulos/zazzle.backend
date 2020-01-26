@@ -33,8 +33,8 @@ jobs:
       - run:
           name: AWS sam pack deploy
           command: |
-            sam package --template-file graqhql-sam-deploy/template.json --output-template-file graqhql-sam-deploy/sam-template.yml --s3-bucket mtgnorth-api-serverless
-            sam deploy --template-file graqhql-sam-deploy/sam-template.yml --stack-name mtgnorth-api-serverless --capabilities CAPABILITY_NAMED_IAM
+            sam package --template-file graphql-sam-deploy/template.json --output-template-file graphql-sam-deploy/sam-template.yml --s3-bucket mtgnorth-api-serverless
+            sam deploy --template-file graphql-sam-deploy/sam-template.yml --stack-name mtgnorth-api-serverless --capabilities CAPABILITY_NAMED_IAM
 
 workflows:
   version: 2
