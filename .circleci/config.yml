@@ -1,0 +1,51 @@
+version: 2.1
+orbs:
+  aws-serverless: circleci/aws-serverless@1.0.2
+  node: circleci/node@1.1.6
+jobs:
+  build:
+    working_directory: ~/zazzle
+    executor:
+      name: node/default
+      tag: '10.4'
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+      - run: npm run tslint
+      - run: npm run test
+      - run: npm run build.serverless.prod
+      - save_cache:
+          key: build-cache-{{ .Branch }}
+          paths:
+            - dist
+  deploy:
+    working_directory: ~/zazzle
+    executor: aws-serverless/default
+    steps:
+      - checkout
+      - aws-serverless/install
+      - restore_cache:
+          keys:
+            - build-cache-{{ .Branch }}
+      - run:
+          name: AWS sam pack deploy
+          command: |
+            sam package --template-file serverless-sam-deploy/template.json --output-template-file serverless-sam-deploy/sam-template.yml --s3-bucket mtgnorth-api-serverless"
+            sam deploy --template-file serverless-sam-deploy/sam-template.yml --stack-name mtgnorth-api-serverless --capabilities CAPABILITY_NAMED_IAM
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

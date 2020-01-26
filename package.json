@@ -24,7 +24,6 @@
     "prettier:check": "prettier --config ./.prettierrc --list-different \"src/**/*{.ts,.js,.json,.css,.scss}\"",
     "prettier:fix": "prettier --config ./.prettierrc --staged --write \"src/**/*\"",
     "prettier:quick": "pretty-quick --stage",
-    "graphql.sam.local": "npm run build.graphql && sam local start-api -t graphql-sam-deploy/template.json",
     "aws.sam.local": "sam local start-api -t serverless-sam-deploy/template.json",
     "aws.sam.pack": "sam package --template-file serverless-sam-deploy/template.json --output-template-file serverless-sam-deploy/sam-template.yml --s3-bucket mtgnorth-api-serverless",
     "aws.sam.deploy": "sam deploy --template-file serverless-sam-deploy/sam-template.yml --stack-name mtgnorth-api-serverless --capabilities CAPABILITY_NAMED_IAM",
