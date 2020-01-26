@@ -32,7 +32,7 @@ jobs:
       - run:
           name: AWS sam pack deploy
           command: |
-            sam package --template-file serverless-sam-deploy/template.json --output-template-file serverless-sam-deploy/sam-template.yml --s3-bucket mtgnorth-api-serverless"
+            sam package --template-file serverless-sam-deploy/template.json --output-template-file serverless-sam-deploy/sam-template.yml --s3-bucket mtgnorth-api-serverless
             sam deploy --template-file serverless-sam-deploy/sam-template.yml --stack-name mtgnorth-api-serverless --capabilities CAPABILITY_NAMED_IAM
 
 workflows:
