@@ -76,7 +76,7 @@
     "prettier": "^1.14.2",
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.0",
-    "sam-webpack-plugin": "0.0.10",
+    "sam-webpack-plugin": "0.0.12",
     "supertest": "^4.0.2",
     "ts-jest": "^24.3.0",
     "ts-loader": "^6.2.1",
