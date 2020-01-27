@@ -19,7 +19,6 @@ jobs:
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
           # taken to be the root directory of the workspace.
-          root: /
           paths:
             - graphql-sam-deploy
   deploy:
@@ -30,7 +29,7 @@ jobs:
       - aws-serverless/install
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at: /tmp/graphql-sam-deploy
+          at: graphql-sam-deploy
       - run:
           name: AWS sam pack deploy
           command: |
