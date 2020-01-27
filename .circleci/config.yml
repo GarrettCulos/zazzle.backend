@@ -16,10 +16,11 @@ jobs:
       - run: npm run tslint
       - run: npm run test
       - run: npm run build.serverless
-      - save_cache:
-          key: build-cache-{{ .Branch }}
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root: /
           paths:
-            - dist
             - graphql-sam-deploy
   deploy:
     working_directory: ~/zazzle
@@ -27,9 +28,9 @@ jobs:
     steps:
       - checkout
       - aws-serverless/install
-      - restore_cache:
-          keys:
-            - build-cache-{{ .Branch }}
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/graphql-sam-deploy
       - run:
           name: AWS sam pack deploy
           command: |
