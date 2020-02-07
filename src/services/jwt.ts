@@ -1,8 +1,13 @@
-/**
- * DEPRECATED - MIGRATE TO GRAPHQL
- */
 import jwt from 'jsonwebtoken';
-import { environment } from '../config/environment';
+import { environment } from '@config/environment';
+
+export const jwtSign = (d: { data: any; expiresIn: number }) => {
+  const { data, expiresIn } = d;
+  console.log(d);
+  return jwt.sign(data, environment.SESSION_SECRET, {
+    expiresIn: expiresIn
+  });
+};
 
 export const decodeJwtToken = (token: string): Promise<any> => {
   return new Promise((resolve: Function) => {

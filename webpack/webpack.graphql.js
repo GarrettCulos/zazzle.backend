@@ -5,7 +5,7 @@ const devConfig = {
   mode: 'development',
   resolve: {
     alias: {
-      '@config/environment': path.resolve(rootDir, 'src/config/environment.local')
+      '@config/environment': path.resolve(rootDir, 'src/config/environment')
     }
   }
 };

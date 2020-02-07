@@ -5,10 +5,10 @@ export const projectSchema = makeExecutableSchema({
   typeDefs: [
     generics,
     `    
-    type Query {
-      projects: [String]
-    }
-  `
+      type Query {
+        projects: [String]
+      }
+    `
   ],
   resolvers
 });

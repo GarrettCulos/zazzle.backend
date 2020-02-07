@@ -7,7 +7,4 @@ import { dateResolvers } from '../directives/date';
 export const schema = mergeSchemas({
   schemas: [userSchema, projectSchema, heaterSchema],
   resolvers: [dateResolvers]
-  // schemaDirectives: {
-  //   getTime: GetTime
-  // }
 });

@@ -21,6 +21,7 @@ coverage
 src/config/.env*
 src/config/environment.*
 !src/config/environment.ts
+!src/config/environment.prod.ts
 !src/config/.env.example
 
 # Dependency directory
@@ -44,7 +45,8 @@ deploy.sh
 aws-config.json
 
 # Ingore generated files
-/dist
-/graphql-sam-deploy
-/serverless-sam-deploy
-/serverless
+dist
+graphql-sam-deploy
+serverless-sam-deploy
+serverless
+coverage/

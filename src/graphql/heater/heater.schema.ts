@@ -6,5 +6,5 @@ export const heaterSchema = makeExecutableSchema({
       ping: String
     }
   `,
-  resolvers
+  resolvers: [resolvers]
 });

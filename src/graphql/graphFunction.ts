@@ -2,7 +2,6 @@ import { ApolloServer } from 'apollo-server-lambda';
 import graphql from 'graphql';
 
 import { schema } from './schemas';
-import { environment } from '@config/environment';
 import { decodeJwtToken } from '@services/jwt';
 
 /*
