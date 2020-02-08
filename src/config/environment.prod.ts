@@ -6,6 +6,6 @@ export const environment: Environment = {
   FACEBOOK_CLIENT_ID: '533032377556576',
   dynamoDb: {
     region: process.env.AWS_DEFAULT_REGION,
-    endpoint: 'http://localhost:8000'
+    endpoint: 'https://zazzle-api.yetilabs.ca/gql'
   }
 };
