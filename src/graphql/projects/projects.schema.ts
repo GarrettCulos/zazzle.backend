@@ -6,9 +6,27 @@ export const projectSchema = makeExecutableSchema({
     generics,
     `    
       type Query {
-        projects: [String]
+        projects: ProjectResponse
+      }
+
+      type ProjectResponse {
+        items: [Project]
+        queryInfo: JSON
+      }
+
+      type Project {
+        search: String
+        metadata: ProjectMetadata
+        id: String
+        updatedAt: String
+      }
+
+      type ProjectMetadata {
+        peoples: [String]
+        data: JSON
+        testing: String
       }
     `
   ],
-  resolvers
+  resolvers: [resolvers]
 });

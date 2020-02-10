@@ -3,11 +3,11 @@ import fs from 'fs';
 import { seedFunction } from './seed-data';
 const awsConfig: any = {
   region: 'us-west-2',
-  endpoint: 'http://localhost:8000'
+  endpoint: 'http://localhost:8001'
 };
 AWS.config.update(awsConfig);
 
-const tables = JSON.parse(fs.readFileSync(__dirname + '../dynamodb-table.json', 'utf8'));
+const tables = JSON.parse(fs.readFileSync(__dirname + '/../dynamodb-table.json', 'utf8'));
 const docClient = new AWS.DynamoDB.DocumentClient();
 const dynamodb = new AWS.DynamoDB();
 const tableNames = Object.keys(tables);
@@ -17,6 +17,7 @@ dynamodb.listTables((err, data) => {
     console.log(err, err.stack);
     return;
   }
+  console.log('gotten tables');
   const loadedTables = data.TableNames;
   tableNames.forEach(tableName => {
     if (tableName) {

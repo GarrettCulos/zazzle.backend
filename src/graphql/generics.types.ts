@@ -1,6 +1,8 @@
 export default `
     scalar Date
 
+    scalar JSON
+
     type User {
       id: Int!
       firstName: String

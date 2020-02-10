@@ -1,13 +1,13 @@
 version: '3.7'
 services:
   graphql:
-    # container_name: graphql
+    container_name: zazzleGraphql
     shm_size: '500Mb'
     image: node:12.10.0-alpine
     volumes:
       - '.:/api/graphql'
     working_dir: /api/graphql
-    command: npm run serve-graphql.docker
+    command: npm run build.docker
     expose:
       - '4000'
     networks:
@@ -17,20 +17,20 @@ services:
 
   dynamodb:
     image: amazon/dynamodb-local
-    # container_name: dynamodb
+    container_name: zazzleDynamodb
     environment:
       - ./Djava.library.path=./DynamoDBLocal_lib
     volumes:
       - .:/data/dynamodb-seed
     ports:
-      - '8000:8000'
+      - 8001:8000
     networks:
       - api
-    command: ['-jar', 'DynamoDBLocal.jar', '-sharedDb', '-inMemory']
+    command: ['-jar', 'DynamoDBLocal.jar', '-sharedDb', '-dbPath', './', '-cors', '*']
 
   nginx:
     image: nginx:latest
-    # container_name: apigateway
+    container_name: zazzleApiGateway
     depends_on:
       - graphql
     volumes:

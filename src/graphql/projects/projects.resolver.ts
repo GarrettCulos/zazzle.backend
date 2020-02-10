@@ -5,9 +5,9 @@ export const resolvers: IResolvers = {
   Query: {
     projects: async (root, args, context) => {
       const mid = metro.metricStart('cardNames');
-      const cards = await getProjects();
+      const projects = await getProjects({ limit: 10 });
       metro.metricStop(mid);
-      return cards;
+      return projects;
     }
   }
 };
