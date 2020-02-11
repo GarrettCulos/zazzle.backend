@@ -6,7 +6,7 @@ export const projectSchema = makeExecutableSchema({
     generics,
     `    
       type Query {
-        projects: ProjectResponse
+        projects(limit: Int, exclusiveStartKey: JSON ): ProjectResponse
       }
 
       type ProjectResponse {
