@@ -8,13 +8,29 @@
     ],
     "AttributeDefinitions": [
       { "AttributeName": "id", "AttributeType": "S" },
-      { "AttributeName": "updatedAt", "AttributeType": "S" },
-      { "AttributeName": "search", "AttributeType": "S" }
+      { "AttributeName": "updatedAt", "AttributeType": "N" },
+      { "AttributeName": "visibility", "AttributeType": "S" },
+      { "AttributeName": "projectType", "AttributeType": "S" },
+      { "AttributeName": "userId", "AttributeType": "S" }
     ],
     "GlobalSecondaryIndexes": [
       {
-        "IndexName": "search",
-        "KeySchema": [{ "AttributeName": "search", "KeyType": "HASH" }],
+        "IndexName": "ProjectTypeIndex",
+        "KeySchema": [{ "AttributeName": "projectType", "KeyType": "HASH" }],
+        "Projection": {
+          "ProjectionType": "KEYS_ONLY"
+        }
+      },
+      {
+        "IndexName": "ProjectVisibilityIndex",
+        "KeySchema": [{ "AttributeName": "visibility", "KeyType": "HASH" }],
+        "Projection": {
+          "ProjectionType": "KEYS_ONLY"
+        }
+      },
+      {
+        "IndexName": "UserIndex",
+        "KeySchema": [{ "AttributeName": "userId", "KeyType": "HASH" }],
         "Projection": {
           "ProjectionType": "KEYS_ONLY"
         }
@@ -30,7 +46,7 @@
     ],
     "AttributeDefinitions": [
       { "AttributeName": "id", "AttributeType": "S" },
-      { "AttributeName": "updatedAt", "AttributeType": "S" },
+      { "AttributeName": "updatedAt", "AttributeType": "N" },
       { "AttributeName": "userName", "AttributeType": "S" }
     ],
     "GlobalSecondaryIndexes": [

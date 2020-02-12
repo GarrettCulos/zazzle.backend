@@ -5,6 +5,7 @@ import Post from './post.type';
 type ProjectVisibility = 'public' | 'private';
 export default class ProjectType {
   readonly id: string;
+  readonly userId: string;
   readonly user: User;
   public likedBy: User[];
   public followCount: number;

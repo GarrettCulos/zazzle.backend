@@ -12,6 +12,7 @@ export const dateResolvers = {
       return new Date(value); // value from the client
     },
     serialize(value) {
+      console.log(value);
       return value.getTime(); // value sent to the client
     },
     parseLiteral(ast) {

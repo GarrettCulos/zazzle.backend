@@ -34,20 +34,21 @@ export const SeedProject = (): Project => {
     id: uuid(),
     likedBy: [],
     followCount: 0,
+    userId: uuid(),
     description: uuid(),
     coverImages: [uuid(), uuid()],
     collaborators: [
       {
         userName: uuid(),
         userIcon: uuid(),
-        userId: uuid()
+        id: uuid()
       }
     ],
     location: 'here',
     user: {
       userName: uuid(),
       userIcon: uuid(),
-      userId: uuid()
+      id: uuid()
     },
     projectType: 'testing',
     visibility: 'public',

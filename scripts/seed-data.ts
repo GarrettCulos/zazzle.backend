@@ -9,8 +9,14 @@ export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: 
     switch (tableName) {
       case 'Projects': {
         const proj = SeedProject();
+        const proj2 = JSON.parse(JSON.stringify(proj));
+        proj2.startDate = proj.startDate.getTime();
+        proj2.endDate = proj.endDate.getTime();
+        proj2.createdAt = proj.createdAt.getTime();
+        proj2.updatedAt = proj.updatedAt.getTime();
+        proj2.search = 'testing';
         params = {
-          Item: JSON.parse(JSON.stringify(proj)),
+          Item: proj2,
           ReturnConsumedCapacity: 'TOTAL',
           TableName: 'Projects'
         };
@@ -21,15 +27,9 @@ export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: 
           Item: {
             id: uuid(),
             userName: uuid(),
-            updatedAt: new Date().toISOString(),
-            metadata: {
-              email: uuid(),
-              name: uuid(),
-              firstName: uuid(),
-              lastName: uuid(),
-              avatar: uuid(),
-              likedListIds: [uuid(), uuid()]
-            }
+            userIcon: uuid(),
+            updatedAt: new Date().getTime(),
+            createdAt: new Date().getTime()
           },
           ReturnConsumedCapacity: 'TOTAL',
           TableName: 'Users'
