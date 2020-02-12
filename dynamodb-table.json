@@ -21,7 +21,7 @@
           { "AttributeName": "startDate", "KeyType": "RANGE" }
         ],
         "Projection": {
-          "ProjectionType": "KEYS_ONLY"
+          "ProjectionType": "ALL"
         }
       }
     ],
@@ -33,17 +33,17 @@
           { "AttributeName": "updatedAt", "KeyType": "RANGE" }
         ],
         "Projection": {
-          "ProjectionType": "KEYS_ONLY"
+          "ProjectionType": "ALL"
         }
       },
       {
         "IndexName": "TitleIndex",
         "KeySchema": [
-          { "AttributeName": "title", "KeyType": "HASH" },
-          { "AttributeName": "updatedAt", "KeyType": "RANGE" }
+          { "AttributeName": "id", "KeyType": "HASH" },
+          { "AttributeName": "title", "KeyType": "RANGE" }
         ],
         "Projection": {
-          "ProjectionType": "KEYS_ONLY"
+          "ProjectionType": "ALL"
         }
       }
     ]

@@ -6,14 +6,20 @@ export const projectSchema = makeExecutableSchema({
     generics,
     `    
       type Query {
-        projects(limit: Int, exclusiveStartKey: JSON ): ProjectResponse
+        projects(
+          limit: Int, 
+          exclusiveStartKey: JSON, 
+          sortKey: String, 
+          sortOrder: String,
+          title: String,
+          type: String
+        ): ProjectResponse
       }
 
       type ProjectResponse {
         items: [Project]
         queryInfo: JSON
       }
-
     `
   ],
   resolvers: [resolvers]
