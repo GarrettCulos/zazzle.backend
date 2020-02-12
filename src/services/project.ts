@@ -1,4 +1,7 @@
-import { scan, query } from '@services/dynamo-connect';
+import { scan, query, put } from '@services/dynamo-connect';
+import uuid from 'uuid';
+import { Project } from 'src/models/project';
+import { AddProjectInput, UpdateProjectInput } from 'src/models/project.type';
 
 interface GetProjectsInterface {
   limit: number;
@@ -50,6 +53,41 @@ export const getProjects = async (d: GetProjectsInterface): Promise<{ items: any
       const { Items, ...rest } = await scan(params);
       return { items: Items, queryInfo: rest };
     }
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const addProject = async (d: AddProjectInput): Promise<Project> => {
+  try {
+    const projectId = uuid();
+    const now = new Date();
+    return new Project({
+      ...d,
+      id: projectId,
+      createdAt: now,
+      updatedAt: now
+    });
+
+    // const { Items, ...rest } = await put(params);
+    // return { items: Items, queryInfo: rest };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const updateProject = async (d: UpdateProjectInput): Promise<Project> => {
+  try {
+    const projectId = uuid();
+    return new Project({
+      id: projectId,
+      ...d
+    });
+
+    // const { Items, ...rest } = await put(params);
+    // return { items: Items, queryInfo: rest };
   } catch (err) {
     console.error(err);
     throw err;

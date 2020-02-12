@@ -16,6 +16,11 @@ export const projectSchema = makeExecutableSchema({
         ): ProjectResponse
       }
 
+      type Mutation {
+        addProject(project: CreateProjectInput): Project
+        updateProject(project: UpdateProjectInput): Project
+      }
+      
       type ProjectResponse {
         items: [Project]
         queryInfo: JSON

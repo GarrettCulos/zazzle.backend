@@ -1,5 +1,5 @@
 import { IResolvers } from 'graphql-tools';
-import { getProjects } from '@services/project';
+import { getProjects, addProject, updateProject } from '@services/project';
 import * as metro from '@util/metrica';
 
 const VALID_SORT_KEY = ['updatedAt', 'startDate'];
@@ -20,6 +20,22 @@ export const resolvers: IResolvers = {
         throw `Invalid Sort Order. Expected one of ${VALID_SORT_ORDER.join(' | ')} `;
       }
       const projects = await getProjects(projectQueryParams);
+      metro.metricStop(mid);
+      return projects;
+    }
+  },
+  Mutation: {
+    addProject: async (root, args, context) => {
+      const mid = metro.metricStart('add project');
+      const { project } = args;
+      const projects = await addProject(project);
+      metro.metricStop(mid);
+      return projects;
+    },
+    updateProject: async (root, args, context) => {
+      const mid = metro.metricStart('update project');
+      const { project } = args;
+      const projects = await updateProject(project);
       metro.metricStop(mid);
       return projects;
     }

@@ -27,3 +27,14 @@ export const scan = (params: DynamoDB.ScanInput): Promise<any> => {
     });
   });
 };
+
+export const put = (params: DynamoDB.PutItemInput): Promise<any> => {
+  return new Promise((resolve: Function, reject: Function) => {
+    docClient.put(params, (err: AWS.AWSError, data: DynamoDB.PutItemOutput) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(data);
+    });
+  });
+};
