@@ -9,32 +9,55 @@
     "AttributeDefinitions": [
       { "AttributeName": "id", "AttributeType": "S" },
       { "AttributeName": "updatedAt", "AttributeType": "N" },
-      { "AttributeName": "visibility", "AttributeType": "S" },
+      { "AttributeName": "startDate", "AttributeType": "N" },
       { "AttributeName": "projectType", "AttributeType": "S" },
-      { "AttributeName": "userId", "AttributeType": "S" }
+      { "AttributeName": "title", "AttributeType": "S" }
     ],
-    "GlobalSecondaryIndexes": [
+    "LocalSecondaryIndexes": [
       {
-        "IndexName": "ProjectTypeIndex",
-        "KeySchema": [{ "AttributeName": "projectType", "KeyType": "HASH" }],
-        "Projection": {
-          "ProjectionType": "KEYS_ONLY"
-        }
-      },
-      {
-        "IndexName": "ProjectVisibilityIndex",
-        "KeySchema": [{ "AttributeName": "visibility", "KeyType": "HASH" }],
-        "Projection": {
-          "ProjectionType": "KEYS_ONLY"
-        }
-      },
-      {
-        "IndexName": "UserIndex",
-        "KeySchema": [{ "AttributeName": "userId", "KeyType": "HASH" }],
+        "IndexName": "StartDateIndex",
+        "KeySchema": [
+          { "AttributeName": "id", "KeyType": "HASH" },
+          { "AttributeName": "startDate", "KeyType": "RANGE" }
+        ],
         "Projection": {
           "ProjectionType": "KEYS_ONLY"
         }
       }
+    ],
+    "GlobalSecondaryIndexes": [
+      {
+        "IndexName": "ProjectTypeIndex",
+        "KeySchema": [
+          { "AttributeName": "projectType", "KeyType": "HASH" },
+          { "AttributeName": "updatedAt", "KeyType": "RANGE" }
+        ],
+        "Projection": {
+          "ProjectionType": "KEYS_ONLY"
+        }
+      },
+      {
+        "IndexName": "TitleIndex",
+        "KeySchema": [
+          { "AttributeName": "title", "KeyType": "HASH" },
+          { "AttributeName": "updatedAt", "KeyType": "RANGE" }
+        ],
+        "Projection": {
+          "ProjectionType": "KEYS_ONLY"
+        }
+      }
+    ]
+  },
+  "PrivateProjects": {
+    "TableName": "PrivateProjects",
+    "BillingMode": "PAY_PER_REQUEST",
+    "KeySchema": [
+      { "AttributeName": "userId", "KeyType": "HASH" },
+      { "AttributeName": "updatedAt", "KeyType": "RANGE" }
+    ],
+    "AttributeDefinitions": [
+      { "AttributeName": "userId", "AttributeType": "S" },
+      { "AttributeName": "updatedAt", "AttributeType": "N" }
     ]
   },
   "Users": {
@@ -42,17 +65,20 @@
     "BillingMode": "PAY_PER_REQUEST",
     "KeySchema": [
       { "AttributeName": "id", "KeyType": "HASH" },
-      { "AttributeName": "updatedAt", "KeyType": "RANGE" }
+      { "AttributeName": "createdAt", "KeyType": "RANGE" }
     ],
     "AttributeDefinitions": [
       { "AttributeName": "id", "AttributeType": "S" },
-      { "AttributeName": "updatedAt", "AttributeType": "N" },
+      { "AttributeName": "createdAt", "AttributeType": "N" },
       { "AttributeName": "userName", "AttributeType": "S" }
     ],
     "GlobalSecondaryIndexes": [
       {
         "IndexName": "userName",
-        "KeySchema": [{ "AttributeName": "userName", "KeyType": "HASH" }],
+        "KeySchema": [
+          { "AttributeName": "userName", "KeyType": "HASH" },
+          { "AttributeName": "createdAt", "KeyType": "RANGE" }
+        ],
         "Projection": {
           "ProjectionType": "KEYS_ONLY"
         }

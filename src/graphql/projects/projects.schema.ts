@@ -14,11 +14,6 @@ export const projectSchema = makeExecutableSchema({
         queryInfo: JSON
       }
 
-      type ProjectMetadata {
-        peoples: [String]
-        data: JSON
-        testing: String
-      }
     `
   ],
   resolvers: [resolvers]

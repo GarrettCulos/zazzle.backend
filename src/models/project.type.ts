@@ -2,7 +2,6 @@ import Metric from './metric.type';
 import MetricTemplate from './metricTemplate.type';
 import User from './user.type';
 import Post from './post.type';
-type ProjectVisibility = 'public' | 'private';
 export default class ProjectType {
   readonly id: string;
   readonly userId: string;
@@ -12,7 +11,6 @@ export default class ProjectType {
   readonly projectType: string;
   readonly title: string;
   readonly description: string;
-  readonly visibility: ProjectVisibility;
   readonly startDate: Date;
   readonly endDate: Date;
   readonly createdAt: Date;

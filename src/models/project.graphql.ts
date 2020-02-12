@@ -1,3 +1,9 @@
+/**
+ * Typescript Type and this type are intentionally different
+ * This file has differences
+ *  - userId
+ */
+
 export default `
     type Project {
         id: String!
@@ -7,7 +13,6 @@ export default `
         projectType: String!
         title: String!
         description: String!
-        visibility: String!
         startDate: Date
         endDate: Date
         createdAt: Date

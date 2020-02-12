@@ -7,6 +7,7 @@ export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: 
   for (let i = 0; i <= seedCount; i++) {
     let params;
     switch (tableName) {
+      case 'PrivateProjects':
       case 'Projects': {
         const proj = SeedProject();
         const proj2 = JSON.parse(JSON.stringify(proj));
@@ -14,11 +15,10 @@ export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: 
         proj2.endDate = proj.endDate.getTime();
         proj2.createdAt = proj.createdAt.getTime();
         proj2.updatedAt = proj.updatedAt.getTime();
-        proj2.search = 'testing';
         params = {
           Item: proj2,
           ReturnConsumedCapacity: 'TOTAL',
-          TableName: 'Projects'
+          TableName: tableName
         };
         break;
       }
