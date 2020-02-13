@@ -1,4 +1,5 @@
 import { scan, query, put } from '@services/dynamo-connect';
+import { environment } from '@config/environment';
 import uuid from 'uuid';
 import User from '../models/user.type';
 import { Project } from '../models/project';
@@ -15,7 +16,7 @@ interface GetProjectsInterface {
 export const getProjects = async (d: GetProjectsInterface): Promise<{ items: any[]; queryInfo: any }> => {
   try {
     const params: any = {
-      TableName: 'Projects',
+      TableName: environment.TABLE_NAMES.Projects,
       Limit: d.limit,
       ReturnConsumedCapacity: 'TOTAL'
     };
@@ -71,7 +72,7 @@ export const addProject = async (d: CreateProjectInput): Promise<Project> => {
       updatedAt: now
     });
     const data = await put({
-      TableName: 'Projects',
+      TableName: environment.TABLE_NAMES.Projects,
       ReturnConsumedCapacity: 'TOTAL',
       Item: project.serialize()
     });
@@ -88,7 +89,7 @@ export const updateProject = async (d: UpdateProjectInput, user: User): Promise<
       Items: [currentProject],
       ...rest
     } = await query({
-      TableName: 'Projects',
+      TableName: environment.TABLE_NAMES.Projects,
       ReturnConsumedCapacity: 'TOTAL',
       KeyConditionExpression: 'id = :id',
       ExpressionAttributeValues: {
@@ -105,7 +106,7 @@ export const updateProject = async (d: UpdateProjectInput, user: User): Promise<
       ...d
     });
     const data = await put({
-      TableName: 'Projects',
+      TableName: environment.TABLE_NAMES.Projects,
       ReturnConsumedCapacity: 'TOTAL',
       Item: project.serialize()
     });

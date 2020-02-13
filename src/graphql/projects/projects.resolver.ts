@@ -32,7 +32,7 @@ export const resolvers: IResolvers = {
       if (!user) {
         throw 'Unauthorized Action';
       }
-      const projects = await addProject({ ...project, user: { id: 'asd', userName: 'garrett', userIcon: 'na' } });
+      const projects = await addProject({ ...project, user });
       metro.metricStop(mid);
       return projects;
     },

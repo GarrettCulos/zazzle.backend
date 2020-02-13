@@ -9,6 +9,13 @@ import { decodeJwtToken } from '@services/jwt';
   "Properties": {
     "Handler": "graphFunction.graphHandler",
     "Policies":[ "AWSLambdaExecute", "AWSLambdaVPCAccessExecutionRole"],
+    "Environment": {
+      "Variables": {
+        "PROJECT_TABLE": { "Fn::GetAtt" : [ "Project", "TableName" ] },
+        "USER_TABLE": { "Fn::GetAtt" : [ "User", "TableName" ] },
+        "PRIVATE_PROJECT_TABLE": { "Fn::GetAtt" : [ "PrivateProjects", "TableNam" ] }
+      }
+    },
     "Events":{
       "graphql":{
         "Type": "Api",

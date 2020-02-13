@@ -7,6 +7,11 @@ export interface Environment {
   GOOGLE_CLIENT_ID: string;
 
   dynamoDb: AWS.DynamoDB.ClientConfiguration;
+  TABLE_NAMES: {
+    PrivateProjects: string;
+    Projects: string;
+    Users: string;
+  };
 }
 export const environment: Environment = {
   env: 'development',
@@ -16,5 +21,10 @@ export const environment: Environment = {
   dynamoDb: {
     region: 'us-west-2',
     endpoint: 'http://localhost:8001'
+  },
+  TABLE_NAMES: {
+    PrivateProjects: 'PrivateProjects',
+    Projects: 'Projects',
+    Users: 'Users'
   }
 };
