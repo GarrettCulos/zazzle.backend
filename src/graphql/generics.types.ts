@@ -1,18 +1,23 @@
+import ProjectSchema from '../models/project.graphql';
+import UserSchema from '../models/user.graphql';
+import PostSchema from '../models/post.graphql';
+import MetricSchema from '../models/metric.graphql';
+import MetricTemplate from '../models/metricTemplate.graphql';
+
 export default `
     scalar Date
 
     scalar JSON
+    
+    ${PostSchema}
+    
+    ${MetricSchema}
+    
+    ${MetricTemplate}
 
-    type User {
-      id: Int!
-      firstName: String
-      lastName: String
-      userName: String
-      password: String
-      isActive: Int
-      emailAddress: String
-      provider: String
-      createdAt: Date
-      updatedAt: Date
-    }
+    ${UserSchema}
+
+    ${ProjectSchema}
+
+    
 `;

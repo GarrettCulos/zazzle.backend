@@ -21,6 +21,7 @@ coverage
 src/config/.env*
 src/config/environment.*
 !src/config/environment.ts
+!src/config/environment.docker.ts
 !src/config/environment.prod.ts
 !src/config/.env.example
 
