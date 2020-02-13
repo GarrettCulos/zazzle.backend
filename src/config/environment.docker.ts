@@ -9,5 +9,10 @@ export const environment: Environment = {
     region: 'us-west-2',
     endpoint: `http://dynamodb:8000`,
     credentials: new AWS.Credentials('key', 'secret')
+  },
+  TABLE_NAMES: {
+    PrivateProjects: 'PrivateProjects',
+    Projects: 'Projects',
+    Users: 'Users'
   }
 };

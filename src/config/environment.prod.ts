@@ -7,5 +7,10 @@ export const environment: Environment = {
   dynamoDb: {
     region: process.env.AWS_DEFAULT_REGION,
     endpoint: `https://DYNAMODB.${process.env.AWS_DEFAULT_REGION}.amazonaws.com`
+  },
+  TABLE_NAMES: {
+    PrivateProjects: process.env.PRIVATE_PROJECT_TABLE,
+    Projects: process.env.PROJECT_TABLE,
+    Users: process.env.USER_TABLE
   }
 };
