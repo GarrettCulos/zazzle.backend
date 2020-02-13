@@ -11,8 +11,8 @@ export const environment: Environment = {
     credentials: new AWS.Credentials('key', 'secret')
   },
   TABLE_NAMES: {
-    PrivateProjects: 'PrivateProjects',
-    Projects: 'Projects',
-    Users: 'Users'
+    PrivateProjects: 'PrivateProjects_0_0_1',
+    Projects: 'Projects_0_0_1',
+    Users: 'Users_0_0_1'
   }
 };
