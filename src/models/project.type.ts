@@ -2,17 +2,40 @@ import Metric from './metric.type';
 import MetricTemplate from './metricTemplate.type';
 import User from './user.type';
 import Post from './post.type';
+
+export interface ProjectConstructor {
+  id: string;
+  user: User;
+  projectType: string;
+  title: string;
+  description: string;
+  startDate: Date;
+  endDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  followCount?: Number;
+  likedBy?: User[];
+  coverImages?: string[];
+  tags?: string[];
+  collaborators?: User[];
+  location?: string;
+  posts?: Post[];
+  event?: string;
+  metrics?: Metric[];
+  metricTemplates?: MetricTemplate[];
+}
+
 export default class ProjectType {
-  readonly id: string;
+  id: string;
   userId: string;
-  readonly user: User;
-  readonly projectType: string;
-  readonly title: string;
-  readonly description: string;
-  readonly startDate: Date;
-  readonly endDate: Date;
-  readonly createdAt: Date;
-  readonly updatedAt: Date;
+  user: User;
+  projectType: string;
+  title: string;
+  description: string;
+  startDate: Date;
+  endDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
   likedBy?: User[];
   followCount?: number;
   coverImages?: string[];

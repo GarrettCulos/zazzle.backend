@@ -3,25 +3,24 @@
  * This file has differences
  *  - userId
  */
-const alwaysOptionalProjectProperties = `
+const alwaysOptionalProjectProperties = (isInput: boolean = false) => `
     coverImages: [String]
     tags: [String]
-    collaborators: [User]
+    collaborators: [User${isInput ? 'Input' : ''}]
     location: String
-    posts: [Post]
+    posts: [Post${isInput ? 'Input' : ''}]
     event: String
-    metricTemplates: [MetricTemplate]
+    metricTemplates: [MetricTemplate${isInput ? 'Input' : ''}]
 `;
 
 export default `
     input CreateProjectInput {
-        user: User!
         projectType: String!
         title: String!
         description: String!
         startDate: Date!
         endDate: Date!
-        ${alwaysOptionalProjectProperties}
+        ${alwaysOptionalProjectProperties(true)}
     }
     
     input UpdateProjectInput {
@@ -30,10 +29,10 @@ export default `
         projectType: String
         title: String
         description: String
-        metrics: [Metric]
+        metrics: [MetricInput]
         startDate: Date
         endDate: Date
-        ${alwaysOptionalProjectProperties}
+        ${alwaysOptionalProjectProperties(true)}
     }
 
     type Project {
@@ -48,8 +47,7 @@ export default `
         endDate: Date
         createdAt: Date
         updatedAt: Date
-
         metrics: [Metric]
-        ${alwaysOptionalProjectProperties}
+        ${alwaysOptionalProjectProperties()}
     }
 `;

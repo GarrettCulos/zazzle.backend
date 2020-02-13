@@ -1,7 +1,8 @@
 import { scan, query, put } from '@services/dynamo-connect';
 import uuid from 'uuid';
-import { Project } from 'src/models/project';
-import { AddProjectInput, UpdateProjectInput } from 'src/models/project.type';
+import User from '../models/user.type';
+import { Project } from '../models/project';
+import { CreateProjectInput, UpdateProjectInput } from '../models/project.type';
 
 interface GetProjectsInterface {
   limit: number;
@@ -55,41 +56,62 @@ export const getProjects = async (d: GetProjectsInterface): Promise<{ items: any
     }
   } catch (err) {
     console.error(err);
-    throw err;
+    throw err.message;
   }
 };
 
-export const addProject = async (d: AddProjectInput): Promise<Project> => {
+export const addProject = async (d: CreateProjectInput): Promise<Project> => {
   try {
     const projectId = uuid();
     const now = new Date();
-    return new Project({
+    const project = new Project({
       ...d,
       id: projectId,
       createdAt: now,
       updatedAt: now
     });
-
-    // const { Items, ...rest } = await put(params);
-    // return { items: Items, queryInfo: rest };
+    const data = await put({
+      TableName: 'Projects',
+      ReturnConsumedCapacity: 'TOTAL',
+      Item: project.serialize()
+    });
+    return project;
   } catch (err) {
     console.error(err);
-    throw err;
+    throw err.message;
   }
 };
 
-export const updateProject = async (d: UpdateProjectInput): Promise<Project> => {
+export const updateProject = async (d: UpdateProjectInput, user: User): Promise<Project> => {
   try {
-    const projectId = uuid();
-    return new Project({
-      id: projectId,
+    const {
+      Items: [currentProject],
+      ...rest
+    } = await query({
+      TableName: 'Projects',
+      ReturnConsumedCapacity: 'TOTAL',
+      KeyConditionExpression: 'id = :id',
+      ExpressionAttributeValues: {
+        ':id': d.id
+      },
+      Limit: 1
+    });
+    if (currentProject.userId !== user.id) {
+      throw 'You cannot update this project';
+    }
+    const project = new Project({
+      id: d.id,
+      ...currentProject,
       ...d
     });
-
-    // const { Items, ...rest } = await put(params);
-    // return { items: Items, queryInfo: rest };
+    const data = await put({
+      TableName: 'Projects',
+      ReturnConsumedCapacity: 'TOTAL',
+      Item: project.serialize()
+    });
+    return project;
   } catch (err) {
     console.error(err);
-    throw err;
+    throw err.message;
   }
 };

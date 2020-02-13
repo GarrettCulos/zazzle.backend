@@ -10,13 +10,8 @@ export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: 
       case 'PrivateProjects':
       case 'Projects': {
         const proj = SeedProject();
-        const proj2 = JSON.parse(JSON.stringify(proj));
-        proj2.startDate = proj.startDate.getTime();
-        proj2.endDate = proj.endDate.getTime();
-        proj2.createdAt = proj.createdAt.getTime();
-        proj2.updatedAt = proj.updatedAt.getTime();
         params = {
-          Item: proj2,
+          Item: proj.serialize(),
           ReturnConsumedCapacity: 'TOTAL',
           TableName: tableName
         };

@@ -28,14 +28,22 @@ export const resolvers: IResolvers = {
     addProject: async (root, args, context) => {
       const mid = metro.metricStart('add project');
       const { project } = args;
-      const projects = await addProject(project);
+      const { user } = context;
+      if (!user) {
+        throw 'Unauthorized Action';
+      }
+      const projects = await addProject({ ...project, user: { id: 'asd', userName: 'garrett', userIcon: 'na' } });
       metro.metricStop(mid);
       return projects;
     },
     updateProject: async (root, args, context) => {
       const mid = metro.metricStart('update project');
       const { project } = args;
-      const projects = await updateProject(project);
+      const { user } = context;
+      if (!user) {
+        throw 'Unauthorized Action';
+      }
+      const projects = await updateProject(project, user);
       metro.metricStop(mid);
       return projects;
     }
