@@ -1,14 +1,15 @@
 import uuid from 'uuid';
 import { SeedProject } from '../src/models/project';
 
+import { environment } from '../src/config/environment';
 const seedCount = 100;
 
 export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: string) => {
   for (let i = 0; i <= seedCount; i++) {
     let params;
     switch (tableName) {
-      case 'PrivateProjects':
-      case 'Projects': {
+      case environment.TABLE_NAMES.PrivateProjects:
+      case environment.TABLE_NAMES.Projects: {
         const proj = SeedProject();
         params = {
           Item: proj.serialize(),
@@ -17,7 +18,7 @@ export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: 
         };
         break;
       }
-      case 'Users': {
+      case environment.TABLE_NAMES.Users: {
         params = {
           Item: {
             id: uuid(),
@@ -27,7 +28,7 @@ export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: 
             createdAt: new Date().getTime()
           },
           ReturnConsumedCapacity: 'TOTAL',
-          TableName: 'Users'
+          TableName: tableName
         };
         break;
       }

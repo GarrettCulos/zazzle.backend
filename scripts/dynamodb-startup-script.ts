@@ -1,6 +1,7 @@
 import AWS from 'aws-sdk';
 import fs from 'fs';
 import { seedFunction } from './seed-data';
+import { environment } from '../src/config/environment';
 const awsConfig: any = {
   region: 'us-west-2',
   endpoint: 'http://localhost:8001'
@@ -19,9 +20,10 @@ dynamodb.listTables((err, data) => {
   }
   console.log('gotten tables');
   const loadedTables = data.TableNames;
-  tableNames.forEach(tableName => {
+  tableNames.forEach(tableId => {
+    const tableName = tables[tableId].TableName;
     if (tableName) {
-      const params = tables[tableName];
+      const params = tables[tableId];
       const createTable = () => {
         dynamodb.createTable(params, (err, data) => {
           if (err) {
