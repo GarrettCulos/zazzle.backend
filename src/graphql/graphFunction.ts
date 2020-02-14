@@ -8,7 +8,7 @@ import { decodeJwtToken } from '@services/jwt';
 @WebpackLambda({
   "Properties": {
     "Handler": "graphFunction.graphHandler",
-    "Policies":[ "AWSLambdaExecute", "AWSLambdaVPCAccessExecutionRole"],
+    "Policies":[ "AWSLambdaExecute", "DynamoDBCrudPolicy"],
     "Events":{
       "graphql":{
         "Type": "Api",
