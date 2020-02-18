@@ -11,7 +11,9 @@ import { decodeJwtToken } from '@services/jwt';
     "Policies":[ 
       "AWSLambdaExecute", 
       "AWSLambdaVPCAccessExecutionRole",
-      "DynamoDBCrudPolicy"
+      "DynamoDBCrudPolicy": {
+        "TableName" : "*"
+      }
     ],
     "Events":{
       "graphql":{
