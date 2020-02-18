@@ -1,6 +1,6 @@
 {
   "Projects": {
-    "TableName": "Projects_0_0_1",
+    "TableName": "Projects_0_0_2",
     "BillingMode": "PAY_PER_REQUEST",
     "KeySchema": [
       { "AttributeName": "id", "KeyType": "HASH" },
@@ -48,8 +48,8 @@
       }
     ]
   },
-  "PrivateProjects": {
-    "TableName": "PrivateProjects_0_0_1",
+  "ProjectsPrivate": {
+    "TableName": "ProjectsPrivate_0_0_2",
     "BillingMode": "PAY_PER_REQUEST",
     "KeySchema": [
       { "AttributeName": "userId", "KeyType": "HASH" },
@@ -61,7 +61,7 @@
     ]
   },
   "Users": {
-    "TableName": "Users_0_0_2",
+    "TableName": "Users_0_0_3",
     "BillingMode": "PAY_PER_REQUEST",
     "KeySchema": [
       { "AttributeName": "id", "KeyType": "HASH" },

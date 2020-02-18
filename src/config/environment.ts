@@ -8,7 +8,7 @@ export interface Environment {
 
   dynamoDb: AWS.DynamoDB.ClientConfiguration;
   TABLE_NAMES: {
-    PrivateProjects: string;
+    ProjectsPrivate: string;
     Projects: string;
     Users: string;
   };
@@ -23,8 +23,8 @@ export const environment: Environment = {
     endpoint: 'http://localhost:8001'
   },
   TABLE_NAMES: {
-    PrivateProjects: 'PrivateProjects_0_0_1',
-    Projects: 'Projects_0_0_1',
-    Users: 'Users_0_0_2'
+    ProjectsPrivate: 'ProjectsPrivate_0_0_2',
+    Projects: 'Projects_0_0_2',
+    Users: 'Users_0_0_3'
   }
 };

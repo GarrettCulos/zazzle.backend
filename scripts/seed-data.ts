@@ -9,7 +9,7 @@ export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: 
   for (let i = 0; i <= seedCount; i++) {
     let params;
     switch (tableName) {
-      case environment.TABLE_NAMES.PrivateProjects:
+      case environment.TABLE_NAMES.ProjectsPrivate:
       case environment.TABLE_NAMES.Projects: {
         const proj = SeedProject();
         params = {

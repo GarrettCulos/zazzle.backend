@@ -9,8 +9,8 @@ export const environment: Environment = {
     endpoint: `https://DYNAMODB.${process.env.AWS_DEFAULT_REGION}.amazonaws.com`
   },
   TABLE_NAMES: {
-    PrivateProjects: 'PrivateProjects_0_0_1', //process.env.PRIVATE_PROJECT_TABLE,
-    Projects: 'Projects_0_0_1', //process.env.PROJECT_TABLE,
-    Users: 'Users_0_0_2' //process.env.USER_TABLE
+    ProjectsPrivate: 'ProjectsPrivate_0_0_2', //process.env.PRIVATE_PROJECT_TABLE,
+    Projects: 'Projects_0_0_2', //process.env.PROJECT_TABLE,
+    Users: 'Users_0_0_3' //process.env.USER_TABLE
   }
 };
