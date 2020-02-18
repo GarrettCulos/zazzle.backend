@@ -3,9 +3,17 @@ import { SeedProject } from '../src/models/project';
 import { User } from '../src/models/user.type';
 
 import { environment } from '../src/config/environment';
-const seedCount = 0;
 
 export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: string) => {
+  let seedCount;
+  switch (tableName) {
+    case environment.TABLE_NAMES.Projects: {
+      seedCount = 10000;
+      break;
+    }
+    default:
+      seedCount = 10;
+  }
   for (let i = 0; i <= seedCount; i++) {
     let params;
     switch (tableName) {
