@@ -2,7 +2,7 @@ import { IResolvers } from 'graphql-tools';
 import { getProjects, addProject, updateProject } from '@services/project';
 import * as metro from '@util/metrica';
 
-const VALID_SORT_KEY = ['updatedAt', 'startDate'];
+const VALID_SORT_KEY = ['updatedAt', 'endDate', 'startDate'];
 const VALID_SORT_ORDER = ['asc', 'desc'];
 export const resolvers: IResolvers = {
   Query: {

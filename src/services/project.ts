@@ -12,16 +12,18 @@ interface GetProjectsInterface {
   title: string;
   type: string;
   sortOrder: 'asc' | 'desc';
-  sortKey: 'updatedAt' | 'startDate';
+  sortKey: 'updatedAt' | 'startDate' | 'endDate';
 }
 export const getProjects = async (d: GetProjectsInterface): Promise<{ items: any[]; queryInfo: any }> => {
   try {
-    const params: any = {
+    const baseParams: any = {
       TableName: environment.TABLE_NAMES.Projects,
       Limit: d.limit,
       ReturnConsumedCapacity: 'TOTAL'
     };
-    console.log(d);
+    const params = { ...baseParams };
+    // indexes for updatedAt, projectType, startDate, endDate => projectIds.
+    params.IndexName = 'UpdatedAtIndex';
 
     // Handle pagination start key
     if (d.exclusiveStartKey) {
@@ -32,6 +34,12 @@ export const getProjects = async (d: GetProjectsInterface): Promise<{ items: any
     if (d.sortKey === 'startDate') {
       params.IndexName = 'StartDateIndex';
     }
+    if (d.sortKey === 'endDate') {
+      params.IndexName = 'EndDateIndex';
+    }
+    if (d.sortKey === 'updatedAt') {
+      params.IndexName = 'UpdatedAtIndex';
+    }
 
     // if sort order is 'desc' reverse ScanIndexForward
     if (d.sortOrder === 'desc') {
@@ -39,24 +47,17 @@ export const getProjects = async (d: GetProjectsInterface): Promise<{ items: any
     }
 
     // title query overrides startDate sort
-    if (d.title) {
-      params.IndexName = 'TitleIndex';
-      params.FilterExpression = 'begins_with(title, :titleFragment)';
-      params.ExpressionAttributeValues = { ':titleFragment': d.title };
-    }
+    // if (d.title) {
+    //   params.IndexName = 'TitleIndex';
+    //   params.FilterExpression = 'begins_with(title, :titleFragment)';
+    //   params.ExpressionAttributeValues = { ':titleFragment': d.title };
+    // }
+    params.KeyConditionExpression = 'emptyString = :empty';
+    params.ExpressionAttributeValues = { ':empty': '__' };
 
-    // If search for title, use query
-    if (d.type) {
-      params.IndexName = 'ProjectTypeIndex';
-      params.KeyConditionExpression = 'projectType = :projectType';
-      params.ExpressionAttributeValues = { ':projectType': d.type };
-      const { Items, ...rest } = await query(params);
-      return { items: Items, queryInfo: rest };
-    } else {
-      // If no search params/projectFilters use scan
-      const { Items, ...rest } = await scan(params);
-      return { items: Items, queryInfo: rest };
-    }
+    console.log(params);
+    const { Items, ...rest } = await query(params);
+    return { items: Items, queryInfo: rest };
   } catch (err) {
     throw err.message;
   }

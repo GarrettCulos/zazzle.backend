@@ -23,6 +23,7 @@ export class Project extends ProjectType {
   serialize(): ProjectType {
     return {
       ...this,
+      emptyString: '__', //Stupid DynamoDB sorting :(
       startDate: this.startDate.getTime(),
       endDate: this.endDate.getTime(),
       updatedAt: this.updatedAt.getTime(),
