@@ -4,6 +4,7 @@ import uuid from 'uuid';
 import User from '../models/user.type';
 import { Project } from '../models/project';
 import { CreateProjectInput, UpdateProjectInput } from '../models/project.type';
+import { addToUserProjects } from './user';
 
 interface GetProjectsInterface {
   limit: number;
@@ -20,6 +21,7 @@ export const getProjects = async (d: GetProjectsInterface): Promise<{ items: any
       Limit: d.limit,
       ReturnConsumedCapacity: 'TOTAL'
     };
+    console.log(d);
 
     // Handle pagination start key
     if (d.exclusiveStartKey) {
@@ -56,7 +58,6 @@ export const getProjects = async (d: GetProjectsInterface): Promise<{ items: any
       return { items: Items, queryInfo: rest };
     }
   } catch (err) {
-    console.error(err);
     throw err.message;
   }
 };
@@ -76,6 +77,7 @@ export const addProject = async (d: CreateProjectInput): Promise<Project> => {
       ReturnConsumedCapacity: 'TOTAL',
       Item: project.serialize()
     });
+    await addToUserProjects(project.userId, projectId);
     return project;
   } catch (err) {
     console.error(err);

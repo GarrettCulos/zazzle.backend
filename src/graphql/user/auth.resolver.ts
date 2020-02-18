@@ -4,6 +4,7 @@ import * as metro from '@util/metrica';
 import { verifyGoogleToken } from '@services/google.service';
 import { verifyFacebookToken } from '@services/facebook.service';
 import { jwtSign } from '@services/jwt';
+import { getUserByEmail, addUser } from '@services/user';
 import { EXPIRES_IN } from '@global/constants';
 export const resolvers: IResolvers = {
   Mutation: {
@@ -15,8 +16,22 @@ export const resolvers: IResolvers = {
           token: undefined,
           expiresIn: EXPIRES_IN
         };
-        await verifyGoogleToken(idToken);
-        response.user = { emailAddress: email };
+        const googleData = await verifyGoogleToken(idToken);
+
+        if (!googleData.payload.email_verified) {
+          throw 'email not verified';
+        }
+        // get user data for email.
+        let user = await getUserByEmail(email);
+        // if its not in the db, add data to user table
+        if (!user) {
+          user = await addUser({
+            email,
+            userName: googleData.payload.name,
+            userIcon: googleData.payload.picture
+          });
+        }
+        response.user = user;
         response.token = jwtSign({ data: response.user, expiresIn: EXPIRES_IN });
         metro.metricStop(mid);
         return response;
@@ -34,8 +49,18 @@ export const resolvers: IResolvers = {
           token: undefined,
           expiresIn: EXPIRES_IN
         };
-        await verifyFacebookToken(idToken);
-        response.user = { emailAddress: email };
+        const fbData = await verifyFacebookToken(idToken);
+        // get user data for email.
+        let user = await getUserByEmail(email);
+        // if its not in the db, add data to user table
+        if (!user) {
+          user = await addUser({
+            email,
+            userName: fbData.name,
+            userIcon: fbData.picture.data.url
+          });
+        }
+        response.user = user;
         response.token = jwtSign({ data: response.user, expiresIn: EXPIRES_IN });
         metro.metricStop(mid);
         return response;

@@ -1,8 +1,9 @@
 import uuid from 'uuid';
 import { SeedProject } from '../src/models/project';
+import { User } from '../src/models/user.type';
 
 import { environment } from '../src/config/environment';
-const seedCount = 100;
+const seedCount = 0;
 
 export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: string) => {
   for (let i = 0; i <= seedCount; i++) {
@@ -20,13 +21,13 @@ export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: 
       }
       case environment.TABLE_NAMES.Users: {
         params = {
-          Item: {
+          Item: new User({
             id: uuid(),
             userName: uuid(),
             userIcon: uuid(),
-            updatedAt: new Date().getTime(),
-            createdAt: new Date().getTime()
-          },
+            updatedAt: new Date(),
+            createdAt: new Date()
+          }).serialize(),
           ReturnConsumedCapacity: 'TOTAL',
           TableName: tableName
         };

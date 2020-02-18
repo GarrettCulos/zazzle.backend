@@ -13,7 +13,7 @@ export function verifyFacebookToken(token: string): Promise<any> {
         const isValid = tokenResponse.data.is_valid;
         if (environment.FACEBOOK_CLIENT_ID === appId && isValid) {
           request.get(
-            `https://graph.facebook.com/me/?access_token=${token}&fields=name,email,first_name,last_name`,
+            `https://graph.facebook.com/me/?access_token=${token}&fields=name,picture,email,first_name,last_name`,
             (req2: any, response2: any, next2: any) => {
               const meResponse = JSON.parse(response2.body);
               return resolve(meResponse);

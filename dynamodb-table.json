@@ -61,7 +61,7 @@
     ]
   },
   "Users": {
-    "TableName": "Users_0_0_1",
+    "TableName": "Users_0_0_2",
     "BillingMode": "PAY_PER_REQUEST",
     "KeySchema": [
       { "AttributeName": "id", "KeyType": "HASH" },
@@ -69,18 +69,30 @@
     ],
     "AttributeDefinitions": [
       { "AttributeName": "id", "AttributeType": "S" },
+      { "AttributeName": "email", "AttributeType": "S" },
       { "AttributeName": "createdAt", "AttributeType": "N" },
       { "AttributeName": "userName", "AttributeType": "S" }
     ],
     "GlobalSecondaryIndexes": [
       {
-        "IndexName": "userName",
+        "IndexName": "UserName",
         "KeySchema": [
           { "AttributeName": "userName", "KeyType": "HASH" },
           { "AttributeName": "createdAt", "KeyType": "RANGE" }
         ],
         "Projection": {
           "ProjectionType": "KEYS_ONLY"
+        }
+      },
+      {
+        "IndexName": "UserEmailIndex",
+        "KeySchema": [
+          { "AttributeName": "email", "KeyType": "HASH" },
+          { "AttributeName": "createdAt", "KeyType": "RANGE" }
+        ],
+        "Projection": {
+          "NonKeyAttributes": ["id"],
+          "ProjectionType": "INCLUDE"
         }
       }
     ]

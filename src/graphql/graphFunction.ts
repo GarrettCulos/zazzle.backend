@@ -34,7 +34,7 @@ const server = new ApolloServer({
     let token = (event && event.headers && event.headers['x-access-token']) || '';
     token = Array.isArray(token) ? token[0] : token;
     const user = await decodeJwtToken(token);
-    const isAdmin = user && user.roles.some((role: any) => role.name === ADMIN_ROLES.SUPER_ADMIN);
+    const isAdmin = user && user.roles && user.roles.some((role: any) => role.name === ADMIN_ROLES.SUPER_ADMIN);
     return { user, isAdmin };
   },
   formatError: err => {

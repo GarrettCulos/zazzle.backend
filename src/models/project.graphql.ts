@@ -20,6 +20,7 @@ export default `
         description: String!
         startDate: Date!
         endDate: Date!
+        private: Boolean
         ${alwaysOptionalProjectProperties(true)}
     }
     

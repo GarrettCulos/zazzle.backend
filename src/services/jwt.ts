@@ -3,7 +3,6 @@ import { environment } from '@config/environment';
 
 export const jwtSign = (d: { data: any; expiresIn: number }) => {
   const { data, expiresIn } = d;
-  console.log(d);
   return jwt.sign(data, environment.SESSION_SECRET, {
     expiresIn: expiresIn
   });

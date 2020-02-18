@@ -11,6 +11,6 @@ export const environment: Environment = {
   TABLE_NAMES: {
     PrivateProjects: 'PrivateProjects_0_0_1', //process.env.PRIVATE_PROJECT_TABLE,
     Projects: 'Projects_0_0_1', //process.env.PROJECT_TABLE,
-    Users: 'Users_0_0_1' //process.env.USER_TABLE
+    Users: 'Users_0_0_2' //process.env.USER_TABLE
   }
 };
