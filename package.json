@@ -24,7 +24,7 @@
     "run-graphql-node": "nodemon dist/graphql/express.js",
     "clean": "npm run clean.build && rimraf node_modules && npm install",
     "test": "jest --forceExit --coverage --verbose",
-    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "lint": "eslint src/**/*.ts",
     "prettier:check": "prettier --config ./.prettierrc --list-different \"src/**/*{.ts,.js,.json,.css,.scss}\"",
     "prettier:fix": "prettier --config ./.prettierrc --staged --write \"src/**/*\"",
     "prettier:quick": "pretty-quick --stage",
@@ -33,13 +33,18 @@
     "aws.sam.deploy": "sam deploy --template-file graphql-sam-deploy/sam-template.yml --stack-name zazzle-serverless-api --capabilities CAPABILITY_NAMED_IAM",
     "serverless.build.pack.deploy": "npm run build.serverless && npm run aws.sam.pack && npm run aws.sam.deploy"
   },
-  "precommit": [
-    "prettier:quick"
-  ],
+  "husky": {
+    "hooks": {
+      "precommit": "npm run prettier:quick"
+    }
+  },
   "dependencies": {
     "@types/aws-sdk": "^2.7.0",
     "@types/graphql-type-json": "^0.3.2",
     "@types/lz-string": "^1.3.33",
+    "@types/request": "^2.48.4",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-server": "^2.4.8",
     "apollo-server-lambda": "^2.4.8",
@@ -47,6 +52,9 @@
     "aws-sdk": "^2.608.0",
     "bcrypt-nodejs": "^0.0.3",
     "dotenv-webpack": "^1.7.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
     "express": "^4.16.3",
     "google-auth-library": "^5.9.1",
     "graphql": "^14.2.1",
@@ -76,19 +84,18 @@
     "babel-preset-latest-node": "^4.0.1",
     "concurrently": "^5.0.2",
     "copy-webpack-plugin": "^5.0.0",
+    "husky": "^4.2.3",
     "jest": "^24.7.1",
     "nodemon": "^2.0.2",
-    "precommit": "^1.2.2",
     "prettier": "^1.14.2",
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.0",
-    "sam-webpack-plugin": "0.0.13",
+    "sam-webpack-plugin": "^0.1.0",
     "supertest": "^4.0.2",
     "ts-jest": "^24.3.0",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
     "tslib": "^1.9.0",
-    "tslint": "^5.9.1",
     "typescript": "^3.7.5",
     "uuid": "^3.4.0",
     "webpack": "^4.29.6",

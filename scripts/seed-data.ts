@@ -8,11 +8,11 @@ export const seedFunction = (docClient: AWS.DynamoDB.DocumentClient, tableName: 
   let seedCount;
   switch (tableName) {
     case environment.TABLE_NAMES.Projects: {
-      seedCount = 10000;
+      seedCount = 10;
       break;
     }
     default:
-      seedCount = 10;
+      seedCount = 4;
   }
   for (let i = 0; i <= seedCount; i++) {
     let params;

@@ -1,5 +1,5 @@
 import { IResolvers } from 'graphql-tools';
-import * as metro from '../../util/metrica';
+import * as metro from '@util/metrica';
 import { getUserById } from '@services/user';
 export const resolvers: IResolvers = {
   Query: {

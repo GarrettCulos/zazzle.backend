@@ -25,7 +25,7 @@ const getEntries = patterns => {
 const baseDeployment = 'dist';
 
 /**
- * mtgnorth external names
+ * external names
  */
 const GLOBALS = '@global';
 const BeUtil = '@util';
@@ -35,7 +35,7 @@ const BeEnv = '@config';
 /**
  * mtgnorth external imports
  */
-const projectExternals = [GLOBALS, BeUtil, BeServices, BeEnv];
+const projectExternals = [];
 
 /**
  * mtgnorth specific aliases
@@ -43,7 +43,7 @@ const projectExternals = [GLOBALS, BeUtil, BeServices, BeEnv];
 const aliases = {
   [GLOBALS]: path.resolve(rootDir, 'global'),
   [BeUtil]: path.resolve(rootDir, 'src/util'),
-  [BeServices]: path.resolve(rootDir, 'src/services'),
+  [BeServices]: path.resolve(rootDir, 'src/services')
 };
 
 /**
