@@ -1,8 +1,7 @@
 import AWS from 'aws-sdk';
 import fs from 'fs';
 import { seedFunction } from './seed-data';
-import { environment } from '../src/config/environment';
-const awsConfig: any = {
+const awsConfig = {
   region: 'us-west-2',
   endpoint: 'http://localhost:8001'
 };

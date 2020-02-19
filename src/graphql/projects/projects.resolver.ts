@@ -9,7 +9,7 @@ export const resolvers: IResolvers = {
     projects: async (root, args, context) => {
       const mid = metro.metricStart('projects query');
       const { limit = 25, exclusiveStartKey, title, type, sortKey = 'updatedAt', sortOrder = 'desc' } = args;
-      const projectQueryParams: { [s: string]: any } = { limit, title, type, sortKey, sortOrder };
+      const projectQueryParams: any = { limit, title, type, sortKey, sortOrder };
       if (exclusiveStartKey) {
         projectQueryParams.exclusiveStartKey = exclusiveStartKey;
       }

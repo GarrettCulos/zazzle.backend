@@ -3,7 +3,7 @@
  * This file has differences
  *  - userId
  */
-const alwaysOptionalProjectProperties = (isInput: boolean = false) => `
+const alwaysOptionalProjectProperties = (isInput = false) => `
     coverImages: [String]
     tags: [String]
     collaborators: [User${isInput ? 'Input' : ''}]

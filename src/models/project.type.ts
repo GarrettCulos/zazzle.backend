@@ -13,7 +13,7 @@ export interface ProjectConstructor {
   endDate: Date;
   createdAt: Date;
   updatedAt: Date;
-  followCount?: Number;
+  followCount?: number;
   likedBy?: User[];
   coverImages?: string[];
   tags?: string[];
