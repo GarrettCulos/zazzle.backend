@@ -11,8 +11,10 @@ import { decodeJwtToken } from '@services/jwt';
     "Policies":[ 
       "AWSLambdaExecute", 
       "AWSLambdaVPCAccessExecutionRole",
-      "DynamoDBCrudPolicy": {
-        "TableName" : "*"
+      { 
+        "DynamoDBCrudPolicy": {
+          "TableName" : "*"
+        }
       }
     ],
     "Events":{
