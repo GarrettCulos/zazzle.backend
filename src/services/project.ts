@@ -74,7 +74,7 @@ export const addProject = async (d: CreateProjectInput): Promise<Project> => {
       updatedAt: now
     });
     const data = await put({
-      TableName: environment.TABLE_NAMES.Projects,
+      TableName: d.private ? environment.TABLE_NAMES.ProjectsPrivate : environment.TABLE_NAMES.Projects,
       ReturnConsumedCapacity: 'TOTAL',
       Item: project.serialize()
     });

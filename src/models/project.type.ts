@@ -64,6 +64,7 @@ export interface CreateProjectInput {
   event?: string;
   metrics?: Metric[];
   metricTemplates?: MetricTemplate[];
+  private: boolean;
 }
 
 export interface UpdateProjectInput {
