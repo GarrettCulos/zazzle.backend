@@ -8,12 +8,12 @@
     "sourceMap": true,
     "outDir": "dist/src",
     "baseUrl": "./",
+    "typeRoots": ["node_modules/@types"],
     "paths": {
-      "*": ["node_modules/*"],
-      "@global": ["global"],
-      "@util ": ["src/util"],
-      "@services": ["src/services"],
-      "@config": ["src/config"]
+      // "@global": ["global"],
+      // "@util ": ["src/util"],
+      // "@services": ["src/services"],
+      // "@config": ["src/config"]
     }
   },
   "include": ["src/**/*", "scripts/**/*", "global"]

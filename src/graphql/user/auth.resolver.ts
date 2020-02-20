@@ -6,13 +6,14 @@ import { verifyFacebookToken } from '@services/facebook.service';
 import { jwtSign } from '@services/jwt';
 import { getUserByEmail, addUser } from '@services/user';
 import { EXPIRES_IN } from '@global/constants';
+import UserType from '@models/user.type';
 export const resolvers: IResolvers = {
   Mutation: {
     exchangeGoogle: async (root, args, context) => {
       const mid = metro.metricStart('exchange-google');
       try {
         const { idToken, email } = args.auth;
-        const response: any = {
+        const response: { [s: string]: string | number | UserType } = {
           token: undefined,
           expiresIn: EXPIRES_IN
         };
@@ -45,7 +46,7 @@ export const resolvers: IResolvers = {
       const mid = metro.metricStart('exchange-facebook');
       try {
         const { idToken, email } = args.auth;
-        const response: any = {
+        const response: { [s: string]: string | number | UserType } = {
           token: undefined,
           expiresIn: EXPIRES_IN
         };
