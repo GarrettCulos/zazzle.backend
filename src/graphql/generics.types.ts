@@ -3,6 +3,7 @@ import UserSchema from '../models/user.graphql';
 import PostSchema from '../models/post.graphql';
 import MetricSchema from '../models/metric.graphql';
 import MetricTemplate from '../models/metricTemplate.graphql';
+import FavoritesSchema from '../models/favorites.graphql';
 
 export default `
     scalar Date
@@ -18,6 +19,7 @@ export default `
     ${UserSchema}
 
     ${ProjectSchema}
-
+    
+    ${FavoritesSchema}
     
 `;

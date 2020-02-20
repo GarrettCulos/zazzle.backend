@@ -1,7 +1,8 @@
-import { scan, query, put } from '@services/dynamo-connect';
+import { remove, query, put } from '@services/dynamo-connect';
 import { environment } from '@config/environment';
 import uuid from 'uuid';
-import User from '../models/user.type';
+import UserType, { User } from '../models/user.type';
+import { Favorite } from '../models/favorites';
 import { Project } from '../models/project';
 import { CreateProjectInput, UpdateProjectInput } from '../models/project.type';
 import { addToUserProjects } from './user';
@@ -55,10 +56,10 @@ export const getProjects = async (d: GetProjectsInterface): Promise<{ items: any
     params.KeyConditionExpression = 'emptyString = :empty';
     params.ExpressionAttributeValues = { ':empty': '__' };
 
-    console.log(params);
     const { Items, ...rest } = await query(params);
     return { items: Items, queryInfo: rest };
   } catch (err) {
+    console.error(err);
     throw err.message;
   }
 };
@@ -86,7 +87,7 @@ export const addProject = async (d: CreateProjectInput): Promise<Project> => {
   }
 };
 
-export const updateProject = async (d: UpdateProjectInput, user: User): Promise<Project> => {
+export const updateProject = async (d: UpdateProjectInput, user: UserType): Promise<Project> => {
   try {
     const {
       Items: [currentProject],
@@ -114,6 +115,117 @@ export const updateProject = async (d: UpdateProjectInput, user: User): Promise<
       Item: project.serialize()
     });
     return project;
+  } catch (err) {
+    console.error(err);
+    throw err.message;
+  }
+};
+
+export const changeFavorites = async (mode: 'add' | 'remove', projectId: string, user: UserType): Promise<string[]> => {
+  try {
+    if (mode === 'add') {
+      const now = new Date();
+      const fav = new Favorite({ userId: user.id, projectId, updatedAt: now, createdAt: now });
+      await put({
+        TableName: environment.TABLE_NAMES.Favorite,
+        ReturnConsumedCapacity: 'TOTAL',
+        Item: fav.serialize()
+      });
+      return;
+    } else {
+      await remove({
+        TableName: environment.TABLE_NAMES.Favorite,
+        ReturnConsumedCapacity: 'TOTAL',
+        Key: {
+          userId: user.id,
+          projectId: projectId
+        },
+        ReturnValues: 'NONE'
+      });
+      return;
+    }
+  } catch (err) {
+    console.error(err);
+    throw err.message;
+  }
+};
+
+export const getUserFavorites = async (userId: string): Promise<string[]> => {
+  try {
+    const { Items } = await query({
+      TableName: environment.TABLE_NAMES.Favorite,
+      ReturnConsumedCapacity: 'TOTAL',
+      KeyConditionExpression: 'id = :id',
+      ExpressionAttributeValues: {
+        ':id': userId
+      }
+    });
+    return Items;
+  } catch (err) {
+    console.error(err);
+    throw err.message;
+  }
+};
+// TODO: transaction this sequence of calls.
+export const removeProject = async (projectId: string, user: UserType): Promise<undefined> => {
+  try {
+    // try to remove public projects, then try private projects if that fails (save write/read);
+    const {
+      Items: [currentProject]
+    } = await query({
+      TableName: environment.TABLE_NAMES.Projects,
+      ReturnConsumedCapacity: 'TOTAL',
+      KeyConditionExpression: 'id = :id',
+      ExpressionAttributeValues: {
+        ':id': projectId
+      },
+      Limit: 1
+    });
+
+    if (currentProject && currentProject.userId !== user.id) {
+      throw 'You cannot remove this project';
+    } else if (currentProject) {
+      await remove({
+        TableName: environment.TABLE_NAMES.Projects,
+        ReturnConsumedCapacity: 'TOTAL',
+        Key: { id: projectId, updatedAt: currentProject.updatedAt },
+        ReturnValues: 'NONE'
+      });
+      return;
+    }
+
+    const {
+      Items: [privateProject]
+    } = await query({
+      TableName: environment.TABLE_NAMES.ProjectsPrivate,
+      ReturnConsumedCapacity: 'TOTAL',
+      KeyConditionExpression: 'id = :id',
+      ExpressionAttributeValues: {
+        ':id': projectId
+      },
+      Limit: 1
+    });
+    if (privateProject && privateProject.userId !== user.id) {
+      throw 'You cannot remove this project';
+    } else if (privateProject) {
+      await remove({
+        TableName: environment.TABLE_NAMES.ProjectsPrivate,
+        ReturnConsumedCapacity: 'TOTAL',
+        Key: { id: projectId, updatedAt: privateProject.updatedAt },
+        ReturnValues: 'NONE'
+      });
+      return;
+    }
+
+    await remove({
+      TableName: environment.TABLE_NAMES.Favorite,
+      ReturnConsumedCapacity: 'TOTAL',
+      Key: {
+        projectId: projectId
+      },
+      ReturnValues: 'NONE'
+    });
+    return;
   } catch (err) {
     console.error(err);
     throw err.message;

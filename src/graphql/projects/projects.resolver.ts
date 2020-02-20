@@ -1,5 +1,5 @@
 import { IResolvers } from 'graphql-tools';
-import { getProjects, addProject, updateProject } from '@services/project';
+import { getProjects, addProject, changeFavorites, updateProject, removeProject } from '@services/project';
 import * as metro from '@util/metrica';
 
 const VALID_SORT_KEY = ['updatedAt', 'endDate', 'startDate'];
@@ -25,6 +25,28 @@ export const resolvers: IResolvers = {
     }
   },
   Mutation: {
+    changeFavorites: async (root, args, context) => {
+      const mid = metro.metricStart('add project');
+      const { mode, projectId } = args;
+      const { user } = context;
+      if (!user) {
+        throw 'Unauthorized Action';
+      }
+      await changeFavorites(mode, projectId, user);
+      metro.metricStop(mid);
+      return;
+    },
+    removeProject: async (root, args, context) => {
+      const mid = metro.metricStart('remove project');
+      const { projectId } = args;
+      const { user } = context;
+      if (!user) {
+        throw 'Unauthorized Action';
+      }
+      await removeProject(projectId, user);
+      metro.metricStop(mid);
+      return;
+    },
     addProject: async (root, args, context) => {
       const mid = metro.metricStart('add project');
       const { project } = args;

@@ -44,26 +44,6 @@ export const addToUserProjects = async (userId: string, projectId: string) => {
     throw err.message;
   }
 };
-export const changeUserFavorites = async (userId: string, mode: 'add' | 'remove', projectId: string) => {
-  const mid = metro.metricStart('changeUserFavorites');
-  try {
-    const userData = await getUserById(userId);
-    const user = new User({
-      ...userData
-    });
-    user.changeFavorites(mode, projectId);
-    const data = await put({
-      TableName: environment.TABLE_NAMES.Users,
-      ReturnConsumedCapacity: 'TOTAL',
-      Item: user.serialize()
-    });
-    metro.metricStop(mid);
-    return data;
-  } catch (err) {
-    metro.metricStop(mid);
-    throw err.message;
-  }
-};
 export const addUser = async (d: AddUserInterface): Promise<UserType> => {
   const mid = metro.metricStart('addUser');
   try {

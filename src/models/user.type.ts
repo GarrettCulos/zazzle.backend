@@ -21,8 +21,9 @@ export class User extends UserType {
   }
 
   serialize(): UserType {
+    const { favorites, ...savedData } = this;
     return {
-      ...this,
+      ...savedData,
       updatedAt: this.updatedAt.getTime(),
       createdAt: this.createdAt.getTime()
     };
@@ -31,14 +32,6 @@ export class User extends UserType {
   addToProject(projectId: string) {
     if (!this.myProjects.includes(projectId)) {
       this.myProjects.push(projectId);
-    }
-  }
-  changeFavorites(mode: 'add' | 'remove', projectId: string) {
-    if (mode === 'add' && !this.favorites.includes(projectId)) {
-      this.favorites = this.favorites.filter(fav => fav !== projectId);
-    }
-    if (mode === 'remove') {
-      this.favorites = this.favorites.filter(fav => fav !== projectId);
     }
   }
 }
