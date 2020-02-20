@@ -50,9 +50,9 @@ export const get = (params: DynamoDB.GetItemInput): Promise<DynamoDB.GetItemOutp
   });
 };
 
-export const getAll = (params: DynamoDB.BatchGetItemInput): Promise<DynamoDB.BatchGetItemOutput> => {
+export const remove = (params: DynamoDB.DeleteItemInput): Promise<DynamoDB.DeleteItemOutput> => {
   return new Promise((resolve: Function, reject: Function) => {
-    docClient.batchGet(params, (err: AWS.AWSError, data: DynamoDB.BatchGetItemOutput) => {
+    docClient.delete(params, (err: AWS.AWSError, data: DynamoDB.DeleteItemOutput) => {
       if (err) {
         return reject(err);
       }

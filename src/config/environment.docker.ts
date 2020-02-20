@@ -13,6 +13,7 @@ export const environment: Environment = {
   TABLE_NAMES: {
     ProjectsPrivate: 'ProjectsPrivate_0_0_2',
     Projects: 'Projects_0_0_2',
-    Users: 'Users_0_0_3'
+    Users: 'Users_0_0_3',
+    Favorites: 'Favorites_0_0_1'
   }
 };

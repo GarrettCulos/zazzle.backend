@@ -19,6 +19,8 @@ export const projectSchema = makeExecutableSchema({
       type Mutation {
         addProject(project: CreateProjectInput): Project
         updateProject(project: UpdateProjectInput): Project
+        changeFavorites(mode: String, projectId: String): Boolean
+        removeProject(projectId: String): Boolean
       }
       
       type ProjectResponse {
