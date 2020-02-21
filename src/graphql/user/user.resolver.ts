@@ -1,6 +1,7 @@
 import { IResolvers } from 'graphql-tools';
 import * as metro from '@util/metrica';
-import { getUserById, getUserFavorites } from '@services/user';
+import { getUserById } from '@services/user';
+import { getUserFavorites } from '@services/project';
 export const resolvers: IResolvers = {
   Query: {
     currentUser: async (root, args, context) => {
@@ -12,7 +13,7 @@ export const resolvers: IResolvers = {
         const userQ = getUserById(context.user.id);
         const favoritesQ = getUserFavorites(context.user.id);
         const [user, favorites] = await Promise.all([userQ, favoritesQ]);
-        user.project = favorites;
+        user.favorites = favorites;
         metro.metricStop(mid);
         return user;
       } catch (err) {

@@ -26,7 +26,7 @@ export const resolvers: IResolvers = {
   },
   Mutation: {
     changeFavorites: async (root, args, context) => {
-      const mid = metro.metricStart('add project');
+      const mid = metro.metricStart('change favs');
       const { mode, projectId } = args;
       const { user } = context;
       if (!user) {

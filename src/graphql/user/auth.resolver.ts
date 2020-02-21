@@ -5,6 +5,7 @@ import { verifyGoogleToken } from '@services/google.service';
 import { verifyFacebookToken } from '@services/facebook.service';
 import { jwtSign } from '@services/jwt';
 import { getUserByEmail, addUser } from '@services/user';
+import { getUserFavorites } from '@services/project';
 import { EXPIRES_IN } from '@global/constants';
 import UserType from '@models/user.type';
 export const resolvers: IResolvers = {
@@ -32,6 +33,9 @@ export const resolvers: IResolvers = {
             userIcon: googleData.payload.picture
           });
         }
+
+        const favorites = await getUserFavorites(user.id);
+        user.favorites = favorites;
         response.user = user;
         response.token = jwtSign({ data: response.user, expiresIn: EXPIRES_IN });
         metro.metricStop(mid);
@@ -61,6 +65,8 @@ export const resolvers: IResolvers = {
             userIcon: fbData.picture.data.url
           });
         }
+        const favorites = await getUserFavorites(user.id);
+        user.favorites = favorites;
         response.user = user;
         response.token = jwtSign({ data: response.user, expiresIn: EXPIRES_IN });
         metro.metricStop(mid);

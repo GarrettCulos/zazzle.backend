@@ -124,17 +124,29 @@ export const updateProject = async (d: UpdateProjectInput, user: UserType): Prom
 export const changeFavorites = async (mode: 'add' | 'remove', projectId: string, user: UserType): Promise<string[]> => {
   try {
     if (mode === 'add') {
+      const { Items } = await query({
+        TableName: environment.TABLE_NAMES.Favorites,
+        ReturnConsumedCapacity: 'TOTAL',
+        KeyConditionExpression: 'userId = :id AND projectId = :projectId',
+        ExpressionAttributeValues: {
+          ':id': user.id,
+          ':projectId': projectId
+        }
+      });
+      if (Items.length > 0) {
+        return;
+      }
       const now = new Date();
       const fav = new Favorite({ userId: user.id, projectId, updatedAt: now, createdAt: now });
       await put({
-        TableName: environment.TABLE_NAMES.Favorite,
+        TableName: environment.TABLE_NAMES.Favorites,
         ReturnConsumedCapacity: 'TOTAL',
         Item: fav.serialize()
       });
       return;
     } else {
       await remove({
-        TableName: environment.TABLE_NAMES.Favorite,
+        TableName: environment.TABLE_NAMES.Favorites,
         ReturnConsumedCapacity: 'TOTAL',
         Key: {
           userId: user.id,
@@ -153,14 +165,14 @@ export const changeFavorites = async (mode: 'add' | 'remove', projectId: string,
 export const getUserFavorites = async (userId: string): Promise<string[]> => {
   try {
     const { Items } = await query({
-      TableName: environment.TABLE_NAMES.Favorite,
+      TableName: environment.TABLE_NAMES.Favorites,
       ReturnConsumedCapacity: 'TOTAL',
-      KeyConditionExpression: 'id = :id',
+      KeyConditionExpression: 'userId = :id',
       ExpressionAttributeValues: {
         ':id': userId
       }
     });
-    return Items;
+    return Items || [];
   } catch (err) {
     console.error(err);
     throw err.message;
@@ -218,7 +230,7 @@ export const removeProject = async (projectId: string, user: UserType): Promise<
     }
 
     await remove({
-      TableName: environment.TABLE_NAMES.Favorite,
+      TableName: environment.TABLE_NAMES.Favorites,
       ReturnConsumedCapacity: 'TOTAL',
       Key: {
         projectId: projectId
