@@ -1,5 +1,5 @@
 import { IResolvers } from 'graphql-tools';
-import { getProjects, addProject, changeFavorites, updateProject, removeProject } from '@services/project';
+import { getProjects, addMetrics, addProject, changeFavorites, updateProject, removeProject } from '@services/project';
 import * as metro from '@util/metrica';
 
 const VALID_SORT_KEY = ['updatedAt', 'endDate', 'startDate'];
@@ -66,6 +66,17 @@ export const resolvers: IResolvers = {
         throw 'Unauthorized Action';
       }
       const projects = await updateProject(project, user);
+      metro.metricStop(mid);
+      return projects;
+    },
+    addMetrics: async (root, args, context) => {
+      const mid = metro.metricStart('add metrics');
+      const { projectId, metrics } = args;
+      const { user } = context;
+      if (!user) {
+        throw 'Unauthorized Action';
+      }
+      const projects = await addMetrics(projectId, metrics, user);
       metro.metricStop(mid);
       return projects;
     }

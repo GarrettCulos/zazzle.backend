@@ -21,6 +21,7 @@ export const projectSchema = makeExecutableSchema({
         updateProject(project: UpdateProjectInput): Project
         changeFavorites(mode: String, projectId: String): Boolean
         removeProject(projectId: String): Boolean
+        addMetrics(projectId: String, metrics: [MetricInput]): Project
       }
       
       type ProjectResponse {

@@ -6,6 +6,7 @@ import { Favorite } from '../models/favorites';
 import { Project } from '../models/project';
 import { CreateProjectInput, UpdateProjectInput } from '../models/project.type';
 import { addToUserProjects } from './user';
+import Metric from '../models/metric.type';
 
 interface GetProjectsInterface {
   limit: number;
@@ -80,6 +81,40 @@ export const addProject = async (d: CreateProjectInput): Promise<Project> => {
       Item: project.serialize()
     });
     await addToUserProjects(project.userId, projectId);
+    return project;
+  } catch (err) {
+    console.error(err);
+    throw err.message;
+  }
+};
+
+export const addMetrics = async (projectId: string, metrics: Metric[], user: UserType): Promise<Project> => {
+  try {
+    const {
+      Items: [currentProject],
+      ...rest
+    } = await query({
+      TableName: environment.TABLE_NAMES.Projects,
+      ReturnConsumedCapacity: 'TOTAL',
+      KeyConditionExpression: 'id = :id',
+      ExpressionAttributeValues: {
+        ':id': projectId
+      },
+      Limit: 1
+    });
+    if (currentProject.userId !== user.id) {
+      throw 'You cannot update this project';
+    }
+    const currentMetrics = currentProject.metrics ? currentProject.metrics : [];
+    const project = new Project({
+      ...currentProject,
+      metrics: [...currentMetrics, ...metrics]
+    });
+    await put({
+      TableName: environment.TABLE_NAMES.Projects,
+      ReturnConsumedCapacity: 'TOTAL',
+      Item: project.serialize()
+    });
     return project;
   } catch (err) {
     console.error(err);
