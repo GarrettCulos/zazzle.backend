@@ -27,7 +27,8 @@ export class Project extends ProjectType {
       startDate: this.startDate.getTime(),
       endDate: this.endDate.getTime(),
       updatedAt: this.updatedAt.getTime(),
-      createdAt: this.createdAt.getTime()
+      createdAt: this.createdAt.getTime(),
+      metrics: this.metrics.map(metric => ({ ...metric, date: new Date(metric.date).getTime() }))
     };
   }
 }

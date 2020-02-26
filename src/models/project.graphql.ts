@@ -30,7 +30,7 @@ export default `
         projectType: String
         title: String
         description: String
-        metrics: [MetricInput]
+        metrics: [MetricInput!]
         startDate: Date
         endDate: Date
         ${alwaysOptionalProjectProperties(true)}
@@ -48,7 +48,7 @@ export default `
         endDate: Date
         createdAt: Date
         updatedAt: Date
-        metrics: [Metric]
+        metrics: [Metric!]
         ${alwaysOptionalProjectProperties()}
     }
 `;
