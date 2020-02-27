@@ -11,6 +11,7 @@ const alwaysOptionalProjectProperties = (isInput = false) => `
     posts: [Post${isInput ? 'Input' : ''}]
     event: String
     metricTemplates: [MetricTemplate${isInput ? 'Input' : ''}]
+    private: Boolean
 `;
 
 export default `
@@ -20,7 +21,6 @@ export default `
         description: String!
         startDate: Date!
         endDate: Date!
-        private: Boolean
         ${alwaysOptionalProjectProperties(true)}
     }
     

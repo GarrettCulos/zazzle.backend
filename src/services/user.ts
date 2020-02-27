@@ -24,26 +24,6 @@ export const getUserById = async (userId: string): Promise<UserType> => {
     throw err;
   }
 };
-export const addToUserProjects = async (userId: string, projectId: string) => {
-  const mid = metro.metricStart('addToUserProjects');
-  try {
-    const userData = await getUserById(userId);
-    const user = new User({
-      ...userData
-    });
-    user.addToProject(projectId);
-    const data = await put({
-      TableName: environment.TABLE_NAMES.Users,
-      ReturnConsumedCapacity: 'TOTAL',
-      Item: user.serialize()
-    });
-    metro.metricStop(mid);
-    return data;
-  } catch (err) {
-    metro.metricStop(mid);
-    throw err.message;
-  }
-};
 export const addUser = async (d: AddUserInterface): Promise<UserType> => {
   const mid = metro.metricStart('addUser');
   try {

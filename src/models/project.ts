@@ -5,6 +5,7 @@ export class Project extends ProjectType {
     super();
     Object.assign(this, project);
     // set defaults if unset;
+    this.private = Boolean(this.private);
     this.startDate = new Date(this.startDate);
     this.endDate = new Date(this.endDate);
     this.updatedAt = new Date(this.updatedAt);
