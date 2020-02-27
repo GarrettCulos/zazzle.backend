@@ -1,10 +1,12 @@
+import { Project } from '../models/project';
+
 export default class UserType {
   id: string;
   userName: string;
   userIcon: string;
   email?: string;
   favorites?: string[];
-  myProjects?: string[];
+  myProjects?: Project[];
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -27,12 +29,6 @@ export class User extends UserType {
       updatedAt: this.updatedAt.getTime(),
       createdAt: this.createdAt.getTime()
     };
-  }
-
-  addToProject(projectId: string) {
-    if (!this.myProjects.includes(projectId)) {
-      this.myProjects.push(projectId);
-    }
   }
 }
 

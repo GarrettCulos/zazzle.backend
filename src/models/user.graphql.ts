@@ -5,7 +5,7 @@ const user = `
         userIcon: String
         email: String
         favorites: [Favorites]
-        myProjects: [String]
+        myProjects: [Project]
         createdAt: Date
         updatedAt: Date
     }

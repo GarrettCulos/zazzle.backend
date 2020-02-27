@@ -5,7 +5,6 @@ import UserType, { User } from '../models/user.type';
 import { Favorite } from '../models/favorites';
 import { Project } from '../models/project';
 import { CreateProjectInput, UpdateProjectInput } from '../models/project.type';
-import { addToUserProjects } from './user';
 import Metric from '../models/metric.type';
 
 interface GetProjectsInterface {
@@ -80,7 +79,6 @@ export const addProject = async (d: CreateProjectInput): Promise<Project> => {
       ReturnConsumedCapacity: 'TOTAL',
       Item: project.serialize()
     });
-    await addToUserProjects(project.userId, projectId);
     return project;
   } catch (err) {
     console.error(err);
@@ -213,7 +211,41 @@ export const getUserFavorites = async (userId: string): Promise<string[]> => {
     throw err.message;
   }
 };
-// TODO: transaction this sequence of calls.
+
+export const getUserProjects = async (userId: string): Promise<string[]> => {
+  try {
+    const { Items } = await query({
+      TableName: environment.TABLE_NAMES.Projects,
+      IndexName: 'UserIndex',
+      ReturnConsumedCapacity: 'TOTAL',
+      KeyConditionExpression: 'userId = :id',
+      ExpressionAttributeValues: {
+        ':id': userId
+      }
+    });
+    return Items || [];
+  } catch (err) {
+    console.error(err);
+    throw err.message;
+  }
+};
+
+export const getPrivateProjects = async (userId: string): Promise<string[]> => {
+  try {
+    const { Items } = await query({
+      TableName: environment.TABLE_NAMES.ProjectsPrivate,
+      ReturnConsumedCapacity: 'TOTAL',
+      KeyConditionExpression: 'userId = :id',
+      ExpressionAttributeValues: {
+        ':id': userId
+      }
+    });
+    return Items.map((item: Project) => ({ ...item, private: true })) || [];
+  } catch (err) {
+    console.error(err);
+    throw err.message;
+  }
+};
 export const removeProject = async (projectId: string, user: UserType): Promise<undefined> => {
   try {
     // try to remove public projects, then try private projects if that fails (save write/read);

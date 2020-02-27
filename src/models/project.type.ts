@@ -47,6 +47,7 @@ export default class ProjectType {
   // tasks: Task[];
   metrics?: Metric[];
   metricTemplates?: MetricTemplate[];
+  private?: boolean;
 }
 
 export interface CreateProjectInput {
@@ -64,7 +65,7 @@ export interface CreateProjectInput {
   event?: string;
   metrics?: Metric[];
   metricTemplates?: MetricTemplate[];
-  private: boolean;
+  private?: boolean;
 }
 
 export interface UpdateProjectInput {
@@ -83,4 +84,5 @@ export interface UpdateProjectInput {
   event?: string;
   metrics?: Metric[];
   metricTemplates?: MetricTemplate[];
+  private?: boolean;
 }
